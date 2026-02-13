@@ -74,6 +74,37 @@ describe('handlePowerGet', () => {
     );
   });
 
+  test('should cooldown after state not available and avoid repeated api calls', async () => {
+    // given
+    const acc = createLightAccessory();
+    const mockAlexaApi = getMockedAlexaApi();
+    mockAlexaApi.getDeviceStateGraphQl.mockReturnValue(
+      TE.of({
+        fromCache: false,
+        statesByDevice: {
+          [acc.device.id]: [
+            O.of({
+              namespace: 'Alexa.BrightnessController',
+              name: 'brightness',
+              value: '100',
+            }),
+          ],
+        },
+      }),
+    );
+
+    // when
+    await expect(acc.handlePowerGet()).rejects.toStrictEqual(
+      acc.serviceCommunicationError,
+    );
+    await expect(acc.handlePowerGet()).rejects.toStrictEqual(
+      acc.serviceCommunicationError,
+    );
+
+    // then
+    expect(mockAlexaApi.getDeviceStateGraphQl).toHaveBeenCalledTimes(1);
+  });
+
   test('should log API errors', async () => {
     // given
     const acc = createLightAccessory();

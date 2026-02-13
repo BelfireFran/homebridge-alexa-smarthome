@@ -15,6 +15,8 @@ import { AlexaSmartHomePlatform } from '../platform';
 import { PluginLogLevel, PluginLogger } from '../util/plugin-logger';
 
 export default abstract class BaseAccessory {
+  private static readonly unavailableStateCooldownMs = 15_000;
+
   public readonly Service: typeof Service = this.platform.Service;
 
   public readonly Characteristic: typeof Characteristic =
@@ -26,6 +28,7 @@ export default abstract class BaseAccessory {
   readonly rangeFeatures: RangeFeatures;
 
   private lastUpdated: Date;
+  private unavailableStateCooldownUntil = 0;
 
   constructor(
     readonly platform: AlexaSmartHomePlatform,
@@ -110,6 +113,10 @@ export default abstract class BaseAccessory {
   getStateGraphQl<S, C>(
     toCharacteristicStateFn: (fa: S[]) => Option<C>,
   ): TaskEither<AlexaApiError, C> {
+    if (Date.now() < this.unavailableStateCooldownUntil) {
+      return TE.left(new InvalidResponse('State not available'));
+    }
+
     const useCache =
       new Date().getTime() - this.lastUpdated.getTime() <
       this.platform.deviceStore.cacheTTL;
@@ -131,6 +138,17 @@ export default abstract class BaseAccessory {
         toCharacteristicStateFn,
         () => new InvalidResponse('State not available'),
       ),
+      TE.mapLeft((error) => {
+        if (error instanceof InvalidResponse) {
+          this.unavailableStateCooldownUntil =
+            Date.now() + BaseAccessory.unavailableStateCooldownMs;
+        }
+        return error;
+      }),
+      TE.tap(() => {
+        this.unavailableStateCooldownUntil = 0;
+        return TE.of(undefined);
+      }),
     );
   }
 
