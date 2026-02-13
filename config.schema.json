@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "HomebridgeAlexaSmartHome",
+  "pluginAlias": "HomebridgeAlexaSmartHomeWithCooldown",
   "pluginType": "platform",
   "singular": true,
   "schema": {
@@ -36,19 +36,84 @@
         "required": false,
         "default": "amazon.com",
         "oneOf": [
-          { "title": "amazon.com", "enum": ["amazon.com"] },
-          { "title": "amazon.ca", "enum": ["amazon.ca"] },
-          { "title": "amazon.de", "enum": ["amazon.de"] },
-          { "title": "amazon.es", "enum": ["amazon.es"] },
-          { "title": "amazon.fr", "enum": ["amazon.fr"] },
-          { "title": "amazon.it", "enum": ["amazon.it"] },
-          { "title": "amazon.in", "enum": ["amazon.in"] },
-          { "title": "amazon.nl", "enum": ["amazon.nl"] },
-          { "title": "amazon.co.jp", "enum": ["amazon.co.jp"] },
-          { "title": "amazon.co.uk", "enum": ["amazon.co.uk"] },
-          { "title": "amazon.com.au", "enum": ["amazon.com.au"] },
-          { "title": "amazon.com.br", "enum": ["amazon.com.br"] },
-          { "title": "amazon.com.mx", "enum": ["amazon.com.mx"] }
+          {
+            "title": "amazon.com",
+            "enum": [
+              "amazon.com"
+            ]
+          },
+          {
+            "title": "amazon.ca",
+            "enum": [
+              "amazon.ca"
+            ]
+          },
+          {
+            "title": "amazon.de",
+            "enum": [
+              "amazon.de"
+            ]
+          },
+          {
+            "title": "amazon.es",
+            "enum": [
+              "amazon.es"
+            ]
+          },
+          {
+            "title": "amazon.fr",
+            "enum": [
+              "amazon.fr"
+            ]
+          },
+          {
+            "title": "amazon.it",
+            "enum": [
+              "amazon.it"
+            ]
+          },
+          {
+            "title": "amazon.in",
+            "enum": [
+              "amazon.in"
+            ]
+          },
+          {
+            "title": "amazon.nl",
+            "enum": [
+              "amazon.nl"
+            ]
+          },
+          {
+            "title": "amazon.co.jp",
+            "enum": [
+              "amazon.co.jp"
+            ]
+          },
+          {
+            "title": "amazon.co.uk",
+            "enum": [
+              "amazon.co.uk"
+            ]
+          },
+          {
+            "title": "amazon.com.au",
+            "enum": [
+              "amazon.com.au"
+            ]
+          },
+          {
+            "title": "amazon.com.br",
+            "enum": [
+              "amazon.com.br"
+            ]
+          },
+          {
+            "title": "amazon.com.mx",
+            "enum": [
+              "amazon.com.mx"
+            ]
+          }
         ]
       },
       "language": {

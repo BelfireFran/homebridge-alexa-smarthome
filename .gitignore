@@ -1,5 +1,4 @@
 # Ignore compiled code
-dist
 .homebridge-alexa-smarthome
 __tests__/*.js
 __tests__/*.d.ts
@@ -91,7 +90,6 @@ web_modules/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/

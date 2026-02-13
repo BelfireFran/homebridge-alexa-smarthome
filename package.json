@@ -27,13 +27,14 @@
     "format": "prettier --ignore-path .gitignore --write \"src/**/*.ts\"",
     "lint": "eslint src/**.ts --max-warnings=0",
     "pre-commit": "lint-staged",
-    "prepare": "echo skip husky",
+    "prepare": "npm run build",
     "prepublishOnly": "npm run lint && npm run build",
     "watch": "npm run build && nodemon",
     "test": "jest --verbose --silent=false --runInBand",
     "test-watch": "nodemon --config ./nodemon-test.json",
     "test-ci": "jest --verbose --silent=true --runInBand --testPathPattern='test.ts'",
-    "upgrade": "npm-check-updates --target minor --upgrade"
+    "upgrade": "npm-check-updates --target minor --upgrade",
+    "postinstall": "npm run build"
   },
   "keywords": [
     "homebridge-plugin",
@@ -76,5 +77,11 @@
     "ts-jest": "^29.3.1",
     "ts-node": "^10.9.2",
     "typescript": "^4.9.5"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "peerDependencies": {
+    "homebridge": "^1.6.0 || ^2.0.0"
   }
 }
